@@ -124,7 +124,7 @@ for index, row in df.iterrows():
 				if response_reject["Assignment"]["AssignmentStatus"] == "Rejected": 
 					new_rejects = new_rejects + 1 
 			if row["WorkerId"] in workers_to_add:
-				test_workers_to_reject.append(row["WorkerID"])
+				test_workers_to_reject.append(row["WorkerId"])
 	if row["Answer.screenercode"] == screener_code or row["Answer.screenercode"] in full_surv_completion_codes:
 		if run_mode == "pay" and response_assign_status["Assignment"]["AssignmentStatus"] == "Submitted":
 			approve_response = client.approve_assignment(
@@ -138,7 +138,7 @@ for index, row in df.iterrows():
 				new_approves = new_approves + 1
 		workers_to_approve.append(row["WorkerId"])
 		if row["WorkerId"] in workers_to_add:
-			test_workers_to_approve.append(row["WorkerID"])
+			test_workers_to_approve.append(row["WorkerId"])
 
 #This block of code goes through everyone that submitted the HIT and assigns them the appropriate qualification to 
 #prevent them from taking the survey again 
@@ -154,7 +154,7 @@ for index, row in df.iterrows():
 			)
 	workers_to_qualify.append(row["WorkerId"])
 	if row["WorkerId"] in workers_to_add:
-			test_workers_to_qualify.append(row["WorkerID"])
+			test_workers_to_qualify.append(row["WorkerId"])
 
 #This for-loop will loop through each observation in the .csv, assign num_results to hold the values for number of previous bonus payment on assignment
 #then if they have NOT been bonused before AND the completion code they entered is in the list, full_surv_completion_codes, executes send_bonus function.
@@ -167,7 +167,7 @@ for index, row in df.iterrows():
 		if run_mode == "pay":
 			bonus_response = client.send_bonus(
 				WorkerId = row["WorkerId"], 
-				BonusAmount = "0.01", 
+				BonusAmount = "2.00", 
 				AssignmentId = row["AssignmentId"], 
 				Reason = "TAC survey completion bonus payment"
 			)
@@ -176,7 +176,7 @@ for index, row in df.iterrows():
 	if row["Answer.screenercode"] in full_surv_completion_codes:
 		workers_to_pay.append(row["WorkerId"])
 		if row["WorkerId"] in workers_to_add:
-			test_workers_to_pay.append(row["WorkerID"])
+			test_workers_to_pay.append(row["WorkerId"])
 
 #if set to test flag, this will print out the # of workers that will be approved/qualified/bonused as well as the workerIDs of those that will be bonused to check before actually sending payment
 if run_mode == "test":
